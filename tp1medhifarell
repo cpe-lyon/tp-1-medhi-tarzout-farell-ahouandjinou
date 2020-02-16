@@ -1,0 +1,233 @@
+TP MEDHI - FARELL
+Exercice 2
+
+----Manuel----
+
+1. À l’aide du manuel, identifiez le rôle de la commande which.
+
+D'après MAN :
+
+Which retourne le chemin des fichiers qui seraient exécutés dans l'environnement courant si ses arguments avaient été donnés comme commandes dans un interpréteur de commandes strictement conforme à POSIX. 
+Which cherche dans la variable PATH les fichiers exécutables correspondants aux noms des arguments. 
+Which ne déréférence pas les liens symboliques.
+
+2. Quand on consulte cette page, comment peut-on rechercher, par exemple, le mot option ?
+Pour rechercher un terme dans le manuel de which on peut utiliser la commande :  man which | grep chemin
+
+3. Comment quitte-t-on le manuel ?
+On quitte le manuel en appuyant sur "q"
+
+4. Chaque section du manuel a une première page, qui présente le contenu de la section. Aﬀicher la première page de la section 6; de quoi parle cette section?
+Pour atteindre la page 1 de la section 6 on utilise : " man 6 intro"
+
+
+----Arborescence----
+
+1. allez dans le dossier /var/log
+serveur@serveur:/$ cd /var/log/
+serveur@serveur:/var/log$
+
+2. remontez dans le dossier parent (/var) en utilisant un chemin relatif
+serveur@serveur:/var/log$ cd ..
+serveur@serveur:/var$
+
+3. Retournez dans le dossier personnel
+serveur@serveur:/var$ cd
+serveur@serveur:$
+
+4. Revenez au dossier précédent (/var)
+serveur@serveur:$ cd -
+/var
+serveur@serveur:/var$
+
+5. Essayez d’accéder au dossier /root; que se passe-t-il?
+serveur@serveur:/var$ cd /root
+-bash: cd: /root: Permission denied
+serveur@serveur:/var$
+
+Nous n’avons pas les privilèges pour accéder à ce rep
+
+
+6. Essayez la commande sudo cd /root; que se passe-t-il? Expliquez
+serveur@serveur:/var$ sudo cd /root
+[sudo] password for serveur:
+sudo: cd: command not found
+serveur@serveur:/var$
+
+Lors de l'utilisation de la commande sudo, l’utilisateur va de manière temporaire avoir les accès du compte administrateur pour l’exécution de la commande. sudo cd /root ne fonctionne pas car après "sudo" il faut indiquer un "programme" or cd n'en est pas un donc il ne le reconnait pas.
+
+7. A partir de votre dossier personnel, créez l’arborescence suivante :
+root@serveur:~# mkdir Dossier1
+root@serveur:~# touch Dossier1/Fichier1
+root@serveur:~# mkdir Dossier2
+root@serveur:~# mkdir Dossier2/Dossier2.1
+root@serveur:~# mkdir Dossier2/Dossier2.2
+root@serveur:~# touch Dossier2/Dossier2.2/Fichier2
+root@serveur:~# touch Dossier2/Dossier2.2/Fichier3
+
+8. Revenez dans votre dossier personnel ; à l’aide de la commande rm, essayez de supprimer Fichier1, puis Dossier1; que se passe-t-il?
+root@serveur:~# rm Dossier1/Fichier1
+root@serveur:~# rm Dossier1
+rm: cannot remove 'Dossier1': Is a directory
+
+Il n’est pas possible de supprimer un dossier à l'aide de la commande rm. 
+
+9. Quelle commande permet de supprimer un dossier ?
+Il est possible de supprimer un dossier à l'aide de la commande : root@serveur:~# rm -d Dossier1
+
+10. que se passe-t-il quand on applique cette commande à Dossier2?
+root@serveur:~# rm -d Dossier2/
+
+rm: cannot remove 'Dossier2/': Directory not empty
+
+Il est impossible de supprimer le dossier car celui-ci contiens des fichiers enfants.
+
+11. comment supprimer en une seule commande Dossier2 et son contenu
+Cela est possible via la commande :
+root@serveur:~# rm -rf Dossier2/
+
+----Commandes importantes----
+
+1. Quelle commande permet d’afficher l’heure? A quoi sert la commande time ?
+La commande date permet d'afficher l'heure, la commande time permet de mesurer une exécution
+
+2. Dans votre dossier personnel, tapez successivement les commandes ls puis la; que peut-on en déduire sur les fichiers commençant par un point?
+Les fichiers commençant par un point sont des fichiers cachés 
+3. Où se situe le programme ls?
+ls se situe dans le fichier du même nom et est disponible dans les dossiers /usr/bin/.
+
+4. Que fait la commande ll? (indice : la commande alias peut vous aider).
+C’est un alias de la commande ls -alF ce qui est un raccourci pour ls -a -l -F.
+
+Il permet de lister tous les fichiers d'un emplacement sous la forme d'une liste avec les droits de chaque fichier.
+5. Quelle commande permet d’aﬀicher les fichiers contenus dans le dossier /bin?
+serveur@serveur:~$ ls /bin
+6. Que fait la commande ls ..?
+La commande ls .. permet de lister les éléments du répertoire parent à celui où nous l’exécutons.
+7. Quelle commande donne le chemin complet du dossier courant?
+La commande pwd:
+serveur@serveur:~$ pwd
+/home/serveur 
+8. Que fait la commande echo 'yo' > plop exécutée 2 fois?
+serveur@serveur:~$ echo 'yo' > plop
+serveur@serveur:~$ cat plop
+yo
+serveur@serveur:~$ echo 'yo' > plop
+serveur@serveur:~$ cat plop
+yo
+
+La commande "echo 'yo' > plop " permet de créer un fichier plop et d'écrire "yo" dedans.
+
+9. Que fait la commande echo 'yo' >> plop exécutée 2 fois?
+serveur@serveur:~$ echo 'yo' >> plop
+serveur@serveur:~$ cat plop
+yo
+serveur@serveur:~$ echo 'yo' >> plop
+serveur@serveur:~$ cat plop
+yo
+yo
+
+Cette commande permet de concaténer le contenu du fichier
+
+10. A quoi sert la commande file? Essayez la sur des fichiers de types différents.
+La commande file permet d'obtenir plus d'informations sur le type de fichier passé en paramètre.
+
+11. Créez un fichier toto qui contient la chaîne Hello Toto !; créer ensuite un lien titi vers ce fichier avec lacommande ln toto titi. Modifiez à présent le contenu de toto et aﬀichez le contenu de titi. Qu’observe-t-on? Supprimez le fichier toto; quelle conséquence cela a-t-il sur titi?
+
+Une fois le lien créé entre toto et titi, toutes les modifications effectuées dans le fichier toto seront effectuées dans le fichier titi. Cependant, si on supprime le fichier toto, le fichier titi ne changera pas et restera le même.
+
+12. Créez à présent un lien symbolique tutu sur titi avec la commande ln -s titi tutu. Modifiez le contenu de titi; quelle conséquence pour tutu? Et inversement? Supprimez le fichier titi; quelle conséquence cela a-t-il sur tutu?
+
+Le paramètre -s rend le lien symbolique. Cela veut dire les changements effectués dans un fichier sont reflétés dans l'autre fichier et cela de manière bidirectionnelle. 
+En cas de suppression, les deux fichiers seront supprimés
+
+13. Aﬀichez à l’écran le fichier /var/log/syslog. Quels raccourcis clavier permettent d’interrompre et reprendre le défilement à l’écran?
+CTRL + S Pour interrompre le défilement
+CTRL + Q Pour reprendre le défilement
+
+14. Aﬀichez les 5 premières lignes du fichier /var/log/syslog, puis les 15 dernières, puis seulement les lignes 10 à 20.
+15. Que fait la commande dmesg | less?
+
+16. Aﬀichez à l’écran le fichier /etc/passwd; que contient-il? Quelle commande permet d’aﬀicher la page de manuel de ce fichier?
+
+serveur@serveur:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+messagebus:x:103:106::/nonexistent:/usr/sbin/nologin
+syslog:x:104:109::/home/syslog:/usr/sbin/nologin
+_apt:x:105:65534::/nonexistent:/usr/sbin/nologin
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+landscape:x:107:114::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:108:1::/var/cache/pollinate:/bin/false
+sshd:x:109:65534::/run/sshd:/usr/sbin/nologin
+systemd-coredump:x:999:999:systemd Core Dumper:/:/sbin/nologin
+serveur:x:1000:1000:serveur:/home/serveur:/bin/bash
+lxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false
+
+17. Aﬀichez seulement la première colonne triée par ordre alphabétique inverse
+
+18. Quelle commande nous donne le nombre d’utilisateurs?
+
+19. Combien de pages de manuel comportent le mot-clé conversion dans leur description ?
+
+man -k conversion|wc -l
+4
+
+20. A l’aide de la commande find, recherchez tous les fichiers se nommant passwd présents sur la machine
+find / -name passwd
+
+21. Modifiez la commande précédente pour que la liste des fichiers trouvés soit enregistrée dans le fichier ~/list_passwd_files.txt et que les erreurs soient redirigées vers le fichier spécial /dev/null
+find / -name passwd >> ~/list_passwd_files.txt 2>> /dev/null
+
+22. Dans votre dossier personnel, utilisez la commande grep pour chercher où est défini l’alias ll vu précédemment
+
+ll est défini dans le fichier .bashrc
+
+23. Utilisez la commande locate pour trouver le fichier history.log.
+
+serveur@serveur:~$ locate history.log
+/var/log/apt/history.log
+
+24.Créer un fichier dans votre dossier personnel puis utilisez locate pour letrouver. Apparaît-il?Pourquoi?
+locate reads one or more databases prepared by updatedb(8) and writes file names matching atleast one of the PATTERNs to standard output, one per line.
+
+Comme la base n'a pas été mis à jour via la commande updatedb le fichier n’apparait pas, il faut donc faire un updatedb pour le voir ensuite.
+
+----Personnalisation du shell----
+
+1. Commencez par créer une copie de ce fichier, que vous appellerez .bashrc_bak
+serveur@serveur:~$ cp .bashrc .bashrc_bak
+
+2. Editez le fichier .bashrc avec nano et décommentez la ligne force_color_prompt=yes pour activer la couleur. Enregistrez le fichier et quittez nano.
+\# uncomment for a colored prompt, if the terminal has the capability; turned
+\# off by default to not distract the user: the focus in a terminal window
+\# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+
+
+3.  Le fichier .bashrc est lu au démarrage du shell ; pour le recharger, il faudrait donc se déconnecter puis se reconnecter ; mais il existe un autre moyen : la commande source .bashrc. Testez-la, l’invite de commande devrait immédiatement passer en couleurs.
+serveur@serveur:~$ sudo -s
+root@serveur:~# source .bashrc
+
+4. Les couleurs par défauts (surtout celle du dossier courant) ne sont pas très visibles. Dans .bashrc, cherchez les lignes commençant par PS1= ; elles indiquent la mise en forme de l’invite de commande (selon que l’on est en couleurs ou non).
+
